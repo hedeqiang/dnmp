@@ -16,7 +16,7 @@ ARG LARADOCK_PHP_VERSION
 ARG BASE_IMAGE_TAG_PREFIX=latest
 FROM laradock/php-fpm:${BASE_IMAGE_TAG_PREFIX}-${LARADOCK_PHP_VERSION}
 
-LABEL maintainer="hedeqiang <hedeqiang@88.com>"
+LABEL maintainer="Mahmoud Zalt <mahmoud@zalt.me>"
 
 ARG LARADOCK_PHP_VERSION
 
@@ -1120,6 +1120,18 @@ RUN set -eux; \
     docker-php-ext-enable zookeeper; \
     php -m | grep -q 'zookeeper'; \
     fi
+
+###########################################################################
+# xlswriter
+###########################################################################
+ARG INSTALL_XLS_WRITER=false
+
+RUN if [ ${INSTALL_XLS_WRITER} = true ]; then \
+    # Install the php xlswriter extension
+    pecl install xlswriter; \
+    docker-php-ext-enable xlswriter \
+;fi
+
 
 ###########################################################################
 # New Relic for PHP:
